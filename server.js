@@ -152,8 +152,6 @@ const authenticateUser = async (req, res, next) => {
     
 
 
-
-
 // Start defining your routes here
 app.get("/", (req, res) => {
   res.status(200).json({
@@ -174,4 +172,3 @@ app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
 
-// deploy link  https://projectauthcecilialinus-lonzreseuq-lz.a.run.app 
