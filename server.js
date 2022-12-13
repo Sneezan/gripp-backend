@@ -220,11 +220,12 @@ const authenticateUser = async (req, res, next) => {
       }
     });    
 
-    app.get("/statement", authenticateUser);
-    app.get("/statement", async (req, res)=> {
-      const statement = await Statements.find({});
-      res.status(200).json({success: true, response: statement});
-    });
+    // authenticated user 
+    // app.get("/statement", authenticateUser);
+    // app.get("/statement", async (req, res)=> {
+    //   const statement = await Statements.find({});
+    //   res.status(200).json({success: true, response: statement});
+    // });
 
 
 // Start the server
