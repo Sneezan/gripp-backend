@@ -27,6 +27,24 @@ app.use(express.json());
 const User = mongoose.model("User", UserSchema);
 
 
+// Start defining your routes here
+app.get("/", (req, res) => {
+  res.status(200).json({
+    Hello: "Gripp: a party game! Here are the routes",
+    Routes: [
+      { "POST /register": "Register an account" },
+      { "POST /login": "Login with password & username" },
+
+      { "GET /statements": "All data in json file" },
+      { "GET /statements-only": "Get only and all statements" },
+      { "GET /statements/levels": "Get statements by levels sorted low-high" },
+      { "GET /statements/levels/:level": "Get statements by specific level, like " },
+      { "GET /statements/statementId/:statementId": "Get specific level ID" }
+    ],
+  });
+});
+
+
 // Register  &  login  Endpoints 
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
@@ -39,7 +57,11 @@ app.post("/register", async (req, res) => {
         response: "Password must be at least 8 characters long"
       });
     } else {
-      const newUser = await new User({username: username, password: bcrypt.hashSync(password, salt)}).save();
+      const newUser = await new User({
+        username: username, 
+        password: bcrypt.hashSync(password, salt)
+      }).save();
+
       res.status(201).json({
         success: true,
         response: {
@@ -106,20 +128,21 @@ const authenticateUser = async (req, res, next) => {
 }
 
 
+///////////////////////   STATEMENT ROUTES    //////////////////////////////
 
-
-//Routes for the statements 
+//Routes for the statements gets all the data in the API
   const Statements = mongoose.model("Statement", StatementSchema);
-
-  app.get('/data', (req, res) => {
+  app.get("/statements", async (req, res) => {
+    const allStatementData = await Statements.find({})
     res.status(200).json({
-      data: data,
       success: true,
+      body: allStatementData
     })
-    })
+  });
     
 
-    app.get("/statements", (request, respons) => {
+// Gets only the statements, all of them
+    app.get("/statements-only", (request, respons) => {
       const statementList = data.map((echo) => echo.statement);
     
       if (statementList) {
@@ -135,37 +158,74 @@ const authenticateUser = async (req, res, next) => {
     });
     
 
-    app.get("/statements/id", (request, respons) => {
-      const idList = data.map((echo) => echo.statementId);
-    
-      if (idList) {
-        respons.status(200).json({ 
-          data: idList, 
-          success: true,});
-      } else {
-        respons.status(200).json({ 
-          data: [], 
+// Sort levels lowest to highest
+    app.get('/statements/levels', (req, res) => {
+      const { level } = req.params;
+      const byLevel = data.sort((a, b) => a.level - b.level)
+        res.json(byLevel.slice(0, [-1])) 
+    })
+
+// Find specific level, 1-3 
+    app.get("/statements/levels/:level", async (req, res) => {
+      try {
+        const byLevel = await Statements.find({level: req.params.level}).exec();
+        if (byLevel) {
+          res.status(200).json({
+            success: true,
+            body: byLevel
+          })
+        } else {
+          res.status(404).json({
+            success: false,
+            body: {
+              message: "Could not find the level"
+            }
+          })
+        }
+      } catch(error) {
+        res.status(400).json({
           success: false,
-          message: "Statement can't be found"});
+          body: {
+            message: "Invalid level entered"
+          }
+        })
       }
     });
-    
 
 
-// Start defining your routes here
-app.get("/", (req, res) => {
-  res.status(200).json({
-    Hello: "Gripp: a party game! Here are the routes",
-    Routes: [
-      { "POST /register": "Register an account" },
-      { "POST /login": "Login with password & username" },
+// Gets specific statement by id 
+    app.get("/statements/statementId/:statementId", async (req, res) => {
+      try {
+        const byId = await Statements.find({statementId: req.params.statementId}).exec();
+        if (byId) {
+          res.status(200).json({
+            success: true,
+            body: byId
+          })
+        } else {
+          res.status(404).json({
+            success: false,
+            body: {
+              message: "Could not find the statement by ID"
+            }
+          })
+        }
+      } catch(error) {
+        res.status(400).json({
+          success: false,
+          body: {
+            message: "Invalid ID entered"
+          }
+        })
+      }
+    });    
 
-      { "GET /data": "All data in json file" },
-      { "GET /statements": "Get all statements" },
-      { "GET /statements/id": "Get all ids" },
-    ],
-  });
-});
+    app.get("/statement", authenticateUser);
+    app.get("/statement", async (req, res)=> {
+      const statement = await Statements.find({});
+      res.status(200).json({success: true, response: statement});
+    });
+
 
 // Start the server
 app.listen(port, () => {
