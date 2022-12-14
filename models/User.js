@@ -7,7 +7,8 @@ export const UserSchema = new mongoose.Schema({
       required: true,
       //minlength: 4,
       //maxlength: 18,
-      unique: true
+      unique: true,
+      trim: true
     },
     password: {
       type: String,
@@ -17,5 +18,9 @@ export const UserSchema = new mongoose.Schema({
     accessToken: {
       type: String,
       default: () => crypto.randomBytes(128).toString("hex")
+    },
+    userCreatedAt: {
+      type: Date,
+      default: () => new Date()
     }
   });

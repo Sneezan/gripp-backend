@@ -107,6 +107,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
+//  Authentication of user 
 const authenticateUser = async (req, res, next) => {
   const accessToken = req.header("Authorization");
   try {
@@ -115,7 +116,7 @@ const authenticateUser = async (req, res, next) => {
       next();
     } else {
       res.status(401).json({
-        response: "Please log in",
+        response: "Not authorized, please log in",
         success: false
       })
     }
@@ -126,6 +127,35 @@ const authenticateUser = async (req, res, next) => {
     })
   }
 }
+
+// authenticate in postman header, key: Authorization, value: accesstoken
+app.get("/profile", authenticateUser);
+app.get("/profile", async (req, res) => {  
+  let profiles = [];
+  const loggedInUser = await User.findOne({accessToken: req.header("Authorization")});
+  profiles.push(loggedInUser);
+  const profile = profiles.map((user, date) => {
+    return ({
+      username: user.username,
+      // profile image?
+      // profile created at date? 
+    })
+  })
+  try {
+    res.status(200).json({
+      success: true,
+      response: profile 
+    })
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      response: err
+    })
+  }
+});
+
+
+
 
 
 ///////////////////////   STATEMENT ROUTES    //////////////////////////////
