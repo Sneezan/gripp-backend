@@ -6,6 +6,7 @@ import bcrypt from "bcrypt";
 import data from "./data/card-statements.json";
 import { UserSchema } from './models/User'
 import { StatementSchema } from './models/Statements'
+import { getRandomInt } from "./utils/utils";
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/gripp";
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -90,7 +91,8 @@ app.post("/login", async (req, res) => {
         response: {
           username: user.username,
           id: user._id,
-          accessToken: user.accessToken
+          accessToken: user.accessToken,
+          userCreatedAt: user.userCreatedAt
         }
       });
     } else {
@@ -169,7 +171,18 @@ app.get("/profile", async (req, res) => {
       body: allStatementData
     })
   });
-    
+ 
+  // random 
+  app.get("/random", async (req, res) => {
+    const allStatementData = await Statements.find({})
+    const randomNumber = getRandomInt(0, 7);
+
+    res.status(200).json({
+      success: true,
+      body: allStatementData[randomNumber].statement
+    })
+  });
+//allStatementData[getRandomInt(0, 7)].statement
 
 // Gets only the statements, all of them
     app.get("/statements-only", (request, respons) => {
