@@ -139,7 +139,7 @@ app.get("/profile", async (req, res) => {
   let profiles = [];
   const loggedInUser = await User.findOne({accessToken: req.header("Authorization")});
   profiles.push(loggedInUser);
-  const profile = profiles.map((user, date) => {
+  const profile = profiles.map((user) => {
     return ({
       username: user.username,
       memberSince: user.userCreatedAt 
