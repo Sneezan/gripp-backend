@@ -178,12 +178,20 @@ app.get("/profile", async (req, res) => {
   app.get("/random", async (req, res) => {
     const allStatementData = await Statements.find({})
     const randomNumber = getRandomInt(0, 7);
-
+if (allStatementData) {
     res.status(200).json({
       success: true,
-      body: allStatementData[randomNumber].statement
-    })
+      body: allStatementData[randomNumber].statement}); 
+    } else {
+        res.status(404).json({
+          success: false,
+          body: {
+            message: "Could not randomize statement"
+          }
+        })
+      }
   });
+
 //allStatementData[getRandomInt(0, 7)].statement
 
 // Gets only the statements, all of them
