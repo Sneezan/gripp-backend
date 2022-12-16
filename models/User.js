@@ -5,8 +5,8 @@ export const UserSchema = new mongoose.Schema({
     username: {
       type: String,
       required: true,
-      //minlength: 4,
-      //maxlength: 18,
+      minlength: 4,
+      maxlength: 18,
       unique: true,
       trim: true
     },

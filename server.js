@@ -35,9 +35,12 @@ app.get("/", (req, res) => {
     Routes: [
       { "POST /register": "Register an account" },
       { "POST /login": "Login with password & username" },
+      { "GET /profile": "Authenticated users profile, add key & accesstoken" },
 
       { "GET /statements": "All data in json file" },
       { "GET /statements-only": "Get only and all statements" },
+      { "GET /random": "get ONE Random statement!" },
+
       { "GET /statements/levels": "Get statements by levels sorted low-high" },
       { "GET /statements/levels/:level": "Get statements by specific level, like " },
       { "GET /statements/statementId/:statementId": "Get specific level ID" }
@@ -139,8 +142,7 @@ app.get("/profile", async (req, res) => {
   const profile = profiles.map((user, date) => {
     return ({
       username: user.username,
-      // profile image?
-      // profile created at date? 
+      memberSince: user.userCreatedAt 
     })
   })
   try {
@@ -172,7 +174,7 @@ app.get("/profile", async (req, res) => {
     })
   });
  
-  // random 
+  // random, gets one random statement 
   app.get("/random", async (req, res) => {
     const allStatementData = await Statements.find({})
     const randomNumber = getRandomInt(0, 7);
@@ -262,13 +264,6 @@ app.get("/profile", async (req, res) => {
         })
       }
     });    
-
-    // authenticated user 
-    // app.get("/statement", authenticateUser);
-    // app.get("/statement", async (req, res)=> {
-    //   const statement = await Statements.find({});
-    //   res.status(200).json({success: true, response: statement});
-    // });
 
 
 // Start the server
