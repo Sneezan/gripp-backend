@@ -158,8 +158,17 @@ app.get("/profile", async (req, res) => {
   }
 });
 
-
-
+// RESET_DB=true npm run dev for MongoCompass
+if(process.env.RESET_DB) {
+  const resetDataBase = async () => {
+    await StatementSchema.deleteMany();
+    booksData.forEach(singleBook => {
+      const newStatement = new StatementSchema(singleStatement);
+      newStatement.save();
+    })
+  }
+  resetDataBase();
+}
 
 
 ///////////////////////   STATEMENT ROUTES    //////////////////////////////
