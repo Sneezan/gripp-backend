@@ -162,7 +162,7 @@ app.get("/profile", async (req, res) => {
 if(process.env.RESET_DB) {
   const resetDataBase = async () => {
     await StatementSchema.deleteMany();
-    booksData.forEach(singleBook => {
+    statements.forEach(singleStatement => {
       const newStatement = new StatementSchema(singleStatement);
       newStatement.save();
     })
