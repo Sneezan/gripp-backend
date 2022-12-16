@@ -176,12 +176,12 @@ app.get("/profile", async (req, res) => {
  
   // random, gets one random statement 
   app.get("/random", async (req, res) => {
-    const allStatementData = await Statements.find({})
+    const randomStatement = await Statements.find({})
     const randomNumber = getRandomInt(0, 7);
-if (allStatementData) {
+if (randomStatement) {
     res.status(200).json({
       success: true,
-      body: allStatementData[randomNumber].statement}); 
+      body: randomStatement[randomNumber].statement}); 
     } else {
         res.status(404).json({
           success: false,
