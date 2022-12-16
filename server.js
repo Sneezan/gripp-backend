@@ -27,7 +27,6 @@ app.use(express.json());
 // Mongoose model user 
 const User = mongoose.model("User", UserSchema);
 
-
 // Start defining your routes here
 app.get("/", (req, res) => {
   res.status(200).json({
@@ -158,12 +157,18 @@ app.get("/profile", async (req, res) => {
   }
 });
 
-// RESET_DB=true npm run dev for MongoCompass
+
+
+///////////////////////   STATEMENT ROUTES    //////////////////////////////
+
+//Routes for the statements gets all the data in the API
+  const Statements = mongoose.model("Statement", StatementSchema);
+  // RESET_DB=true npm run dev for MongoCompass
 if(process.env.RESET_DB) {
   const resetDataBase = async () => {
-    await StatementSchema.deleteMany();
-    statements.forEach(singleStatement => {
-      const newStatement = new StatementSchema(singleStatement);
+    await Statements.deleteMany();
+    data.forEach(singleStatement => {
+      const newStatement = new Statements(singleStatement);
       newStatement.save();
     })
   }
@@ -171,10 +176,6 @@ if(process.env.RESET_DB) {
 }
 
 
-///////////////////////   STATEMENT ROUTES    //////////////////////////////
-
-//Routes for the statements gets all the data in the API
-  const Statements = mongoose.model("Statement", StatementSchema);
   app.get("/statements", async (req, res) => {
     const allStatementData = await Statements.find({})
     res.status(200).json({
