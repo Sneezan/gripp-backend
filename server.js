@@ -7,6 +7,7 @@ import data from "./data/card-statements.json";
 import { UserSchema } from './models/User'
 import { StatementSchema } from './models/Statements'
 import { getRandomInt } from "./utils/utils";
+import { shuffle } from "./utils/utils";
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/gripp";
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -178,11 +179,43 @@ if(process.env.RESET_DB) {
 
   app.get("/statements", async (req, res) => {
     const allStatementData = await Statements.find({})
-    res.status(200).json({
-      success: true,
-      body: allStatementData
-    })
-  });
+    if (allStatementData) {
+       res.status(200).json({
+         success: true,
+         body: allStatementData.sort(() => Math.random() - 0.5)}); 
+       } else {
+           res.status(404).json({
+             success: false,
+             body: {
+               message: "Could not randomize statement"
+             }
+           })
+         }
+
+     // const randomNumber = getRandomInt(0, 7);
+    // const randomised = Array(allStatementData.length).fill({});
+    // allStatementData.map(singleStatement => {
+    //   const randomNumber = getRandomInt(0, allStatementData.length - 1);
+    //   if (randomised[randomNumber].hasOwnProperty("statement")) {
+
+    //  }
+    // });
+
+    // if (allStatementData) {
+    //  shuffle(allStatementData)
+    //   res.status(200).json({
+    //     success: true,
+    //     body: allStatementData}); 
+    //   } else {
+    //       res.status(404).json({
+    //         success: false,
+    //         body: {
+    //           message: "Could not randomize statement"
+    //         }
+    //       })
+    //     }
+    });
+    
  
   // random, gets one random statement 
   app.get("/random", async (req, res) => {
@@ -212,6 +245,7 @@ if (randomStatement) {
         respons.status(200).json({ 
           data: statementList, 
           success: true,});
+
       } else {
         respons.status(200).json({ 
           data: [], 
