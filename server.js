@@ -61,9 +61,9 @@ app.post("/register", async (req, res) => {
       });
     } else {
       const newUser = await new User({
-        email: email.toLowerCase(), 
-        password: bcrypt.hashSync(password, salt),
         username: username,
+        email: email.toLowerCase(), 
+        password: bcrypt.hashSync(password, salt)
       }).save();
 
       res.status(201).json({
@@ -76,7 +76,7 @@ app.post("/register", async (req, res) => {
         }
       });
     }
-  } catch (error) {
+  }  catch (error) {
     const emailExists = await User.findOne({ email })
     if (email === '') {
       res.status(400).json({
@@ -103,16 +103,16 @@ app.post("/register", async (req, res) => {
   }
 }});
 
-
 app.post("/login", async (req, res) => {
   const { password, email } = req.body;
 
   try {
-    const user = await User.findOne({email});
+    const user = await User.findOne({email, username});
     if (user && bcrypt.compareSync(password, user.password)) {
       res.status(200).json({
         success: true,
         response: {
+          username: user.username,
           email: user.email,
           id: user._id,
           accessToken: user.accessToken,
