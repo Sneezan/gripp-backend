@@ -85,7 +85,7 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-  const { password, email } = req.body;
+  const { username, password, email } = req.body;
 
   try {
     const user = await User.findOne({email});
@@ -93,6 +93,7 @@ app.post("/login", async (req, res) => {
       res.status(200).json({
         success: true,
         response: {
+          username: user.username,
           email: user.email,
           id: user._id,
           accessToken: user.accessToken,
