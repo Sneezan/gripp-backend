@@ -61,9 +61,9 @@ app.post("/register", async (req, res) => {
       });
     } else {
       const newUser = await new User({
-        username: username,
         email: email.toLowerCase(), 
-        password: bcrypt.hashSync(password, salt)
+        password: bcrypt.hashSync(password, salt),
+        username: username,
       }).save();
 
       res.status(201).json({
@@ -76,13 +76,33 @@ app.post("/register", async (req, res) => {
         }
       });
     }
-  } catch(error) {
+  } catch (error) {
+    const emailExists = await User.findOne({ email })
+    if (email === '') {
       res.status(400).json({
+        response: 'Please enter an email',
+        error: error,
         success: false,
-        response: error
+      })
+    } else if (emailExists) {
+      res.status(400).json({
+        response: 'Email already exists',
+        success: false,
+      })
+    } else if (error.code === 11000 && error.keyPattern.email) {
+      res.status(400).json({
+        response: 'Email already exists',
+        error: error,
+        success: false,
+      })
+    } else {
+      res.status(400).json({
+        response: error,
+        success: false, 
       });
   }
-});
+}});
+
 
 app.post("/login", async (req, res) => {
   const { password, email } = req.body;
