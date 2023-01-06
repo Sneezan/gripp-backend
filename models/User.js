@@ -7,6 +7,11 @@ export const UserSchema = new mongoose.Schema({
       required: true,
       minlength: 4,
       maxlength: 18,
+      trim: true
+    },
+    email: {
+      type: String,
+      required: true,
       unique: true,
       trim: true
     },

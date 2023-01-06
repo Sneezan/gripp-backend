@@ -7,7 +7,6 @@ import data from "./data/card-statements.json";
 import { UserSchema } from './models/User'
 import { StatementSchema } from './models/Statements'
 import { getRandomInt } from "./utils/utils";
-import { shuffle } from "./utils/utils";
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/gripp";
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -51,7 +50,7 @@ app.get("/", (req, res) => {
 
 // Register  &  login  Endpoints 
 app.post("/register", async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, email } = req.body;
 
   try {
     const salt = bcrypt.genSaltSync();
@@ -62,7 +61,8 @@ app.post("/register", async (req, res) => {
       });
     } else {
       const newUser = await new User({
-        username: username, 
+        username: username,
+        email: email.toLowerCase(), 
         password: bcrypt.hashSync(password, salt)
       }).save();
 
@@ -70,6 +70,7 @@ app.post("/register", async (req, res) => {
         success: true,
         response: {
           username: newUser.username,
+          email: newUser.email,
           accessToken: newUser.accessToken,
           id: newUser._id
         }
@@ -84,15 +85,15 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-  const { username, password } = req.body;
+  const { password, email } = req.body;
 
   try {
-    const user = await User.findOne({username});
+    const user = await User.findOne({email});
     if (user && bcrypt.compareSync(password, user.password)) {
       res.status(200).json({
         success: true,
         response: {
-          username: user.username,
+          email: user.email,
           id: user._id,
           accessToken: user.accessToken,
           userCreatedAt: user.userCreatedAt
@@ -142,7 +143,7 @@ app.get("/profile", async (req, res) => {
   const profile = profiles.map((user) => {
     return ({
       username: user.username,
-      memberSince: user.userCreatedAt 
+      userCreatedAt: user.userCreatedAt 
     })
   })
   try {
