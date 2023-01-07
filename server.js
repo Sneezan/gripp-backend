@@ -86,12 +86,12 @@ app.post("/register", async (req, res) => {
       })
     } else if (emailExists) {
       res.status(400).json({
-        response: 'Email already exists',
+        response: 'Seems like this email has been used before',
         success: false,
       })
     } else if (error.code === 11000 && error.keyPattern.email) {
       res.status(400).json({
-        response: 'Email already exists',
+        response: 'User already exists',
         error: error,
         success: false,
       })
@@ -122,13 +122,13 @@ app.post("/login", async (req, res) => {
     } else {
       res.status(400).json({
         success: false,
-        response: "Credentials didn't match"
+        response: "Credentials didn't match - we can't find the user"
       });
     }
   } catch (error) {
     res.status(500).json({
       success: false,
-      response: error
+      response: "error"
     });
   }
 });
