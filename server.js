@@ -212,29 +212,6 @@ if(process.env.RESET_DB) {
              }
            })
          }
-
-     // const randomNumber = getRandomInt(0, 7);
-    // const randomised = Array(allStatementData.length).fill({});
-    // allStatementData.map(singleStatement => {
-    //   const randomNumber = getRandomInt(0, allStatementData.length - 1);
-    //   if (randomised[randomNumber].hasOwnProperty("statement")) {
-
-    //  }
-    // });
-
-    // if (allStatementData) {
-    //  shuffle(allStatementData)
-    //   res.status(200).json({
-    //     success: true,
-    //     body: allStatementData}); 
-    //   } else {
-    //       res.status(404).json({
-    //         success: false,
-    //         body: {
-    //           message: "Could not randomize statement"
-    //         }
-    //       })
-    //     }
     });
     
  

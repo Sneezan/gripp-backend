@@ -36,7 +36,18 @@
     },
     {
       "statementId": 8,
-      "statement": "Finish the sentences: strangers would describe me as _____. Only I know that I am ______",
+      "statement": "Finish the sentences: Only I know that I am ______",
+      "level": 1
+    },
+    {
+      "statementId": 9,
+      "statement": "Do you think I was popular in school? explain.",
+      "level": 1
+    },
+    {
+      "statementId": 10,
+      "statement": "What about me is most strange or unfamiliar to you?",
       "level": 1
     }
+    
 ]
