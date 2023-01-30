@@ -156,7 +156,7 @@ app.get("/profile", async (req, res) => {
   const profile = profiles.map((user) => {
     return ({
       username: user.username,
-      userCreatedAt: user.userCreatedAt
+      userCreatedAt: format(new Date(user.userCreatedAt), 'yyyy-MM-dd')
     })
   })
   try {
