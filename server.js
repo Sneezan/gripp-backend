@@ -7,6 +7,7 @@ import data from "./data/card-statements.json";
 import { UserSchema } from './models/User'
 import { StatementSchema } from './models/Statements'
 import { getRandomInt } from "./utils/utils";
+import { format } from "date-fns";
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/gripp";
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -108,7 +109,7 @@ app.post("/login", async (req, res) => {
           email: user.email,
           id: user._id,
           accessToken: user.accessToken,
-          userCreatedAt: user.userCreatedAt
+          userCreatedAt: format(new Date(user.userCreatedAt), 'yyyy-MM-dd')
         }
       });
     } else {
@@ -155,7 +156,7 @@ app.get("/profile", async (req, res) => {
   const profile = profiles.map((user) => {
     return ({
       username: user.username,
-      userCreatedAt: user.userCreatedAt 
+      userCreatedAt: user.userCreatedAt
     })
   })
   try {
