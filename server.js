@@ -109,7 +109,7 @@ app.post("/login", async (req, res) => {
           email: user.email,
           id: user._id,
           accessToken: user.accessToken,
-          userCreatedAt: format(new Date(user.userCreatedAt), 'yyyy-MM-dd')
+          userCreatedAt: user.userCreatedAt
         }
       });
     } else {
@@ -156,7 +156,7 @@ app.get("/profile", async (req, res) => {
   const profile = profiles.map((user) => {
     return ({
       username: user.username,
-      userCreatedAt: format(new Date(user.userCreatedAt), 'yyyy-MM-dd')
+      userCreatedAt: user.userCreatedAt
     })
   })
   try {
