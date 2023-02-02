@@ -48,6 +48,120 @@
       "statementId": 10,
       "statement": "What about me is most strange or unfamiliar to you?",
       "level": 1
+    },
+    {
+      "statementId": 11,
+      "statement": "Is human nature inherently violent?",
+      "level": 1
+    },
+    {
+      "statementId": 12,
+      "statement": "What is the impact of social media on mental health and well-being?",
+      "level": 3
+    },
+    {
+      "statementId": 13,
+      "statement": "What is a favorite memory from your childhood?",
+      "level": 3
+    },
+    {
+      "statementId": 14,
+      "statement": "What is one thing on your bucket list that you would like to do in the next year?",
+      "level": 1
+    },
+    {
+      "statementId": 15,
+      "statement": "What is the biggest challenge you face when it comes to taking care of your mental health?",
+      "level": 3
+    },
+    {
+      "statementId": 16,
+      "statement": "What is one thing I can do to help you right now?",
+      "level": 1
+    },
+    {
+      "statementId": 17,
+      "statement": "Share three thing you do to cope with pressure.",
+      "level": 1
+    },
+    {
+      "statementId": 18,
+      "statement": "What's a quality about be that you find unique?",
+      "level": 1
+    },
+    {
+      "statementId": 19,
+      "statement": "Do you think I'm happy? Explain.",
+      "level": 1
+    },
+    {
+      "statementId": 20,
+      "statement": "Put on your favorite song at the moment.",
+      "level": 1
+    },
+    {
+      "statementId": 21,
+      "statement": "Do you believe in the power of affirmation?",
+      "level": 1
+    },
+    {
+      "statementId": 22,
+      "statement": "What is a place you have always wanted to visit?",
+      "level": 1
+    },
+    {
+      "statementId": 23,
+      "statement": "What is a book that has had a significant impact on your life?",
+      "level": 1
+    },
+    {
+      "statementId": 24,
+      "statement": "If you could only keep three possessions, what would they be and why?",
+      "level": 1
+    },
+    {
+      "statementId": 25,
+      "statement": "What is the funniest thing that has happened to you recently?",
+      "level": 3
+    },
+    {
+      "statementId": 26,
+      "statement": "Name three things that you are greateful for today.",
+      "level": 3
+    },
+    {
+      "statementId": 27,
+      "statement": "What is a quirky habit or quirk that you have?",
+      "level": 1
+    },
+    {
+      "statementId": 28,
+      "statement": "What is the last thing that made you smile?",
+      "level": 3
+    },
+    {
+      "statementId": 29,
+      "statement": "Coca-Cola or Pepsi? Explain.",
+      "level": 1
+    },
+    {
+      "statementId": 30,
+      "statement": "Rate this week, on a scale of 1-10.",
+      "level": 1
+    },
+    {
+      "statementId": 31,
+      "statement": "What is a fear that you are currently working to overcome?",
+      "level": 1
+    },
+    {
+      "statementId": 32,
+      "statement": "What is the best advice you have ever received?",
+      "level": 1
+    },
+    {
+      "statementId": 33,
+      "statement": "What is a unique talent or skill that you have observed in others?",
+      "level": 1
     }
-    
 ]
