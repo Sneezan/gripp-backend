@@ -3,7 +3,6 @@ import cors from "cors";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
-import data from "./data/card-statements.json";
 import { UserSchema } from './models/User'
 import { StatementSchema } from './models/Statements'
 import { getRandomInt } from "./utils/utils";
