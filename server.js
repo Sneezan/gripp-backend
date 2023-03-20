@@ -2,11 +2,10 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-
+import data from "./data/card-statements.json";
 import { UserSchema } from './models/User'
 import { StatementSchema } from './models/Statements'
 import { getRandomInt } from "./utils/utils";
-import { format } from "date-fns";
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/gripp";
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
